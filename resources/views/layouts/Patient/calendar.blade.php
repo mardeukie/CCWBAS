@@ -104,8 +104,8 @@
       /* exported handleSignoutClick */
 
       // TODO: Set to client ID and API key from the Developer Console
-      const CLIENT_ID = '125872535727-1mth5qfiracjqt36b9khd9efmdcotpmc.apps.googleusercontent.com';
-      const API_KEY = 'AIzaSyAgG7W-aiOgLWWCpxCWxEV2RJbXzjX7JHE';
+      const CLIENT_ID = 'your_google_client_id';
+      const API_KEY = 'your_google_api_key';
 
       // Discovery doc URL for APIs used by the quickstart
       const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
