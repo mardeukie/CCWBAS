@@ -255,7 +255,7 @@ class RecordController extends Controller
             ],
         ],
         'from' => [
-            'email' => 'marylou.busbus@bisu.edu.ph',
+            'email' => 'your_email@example.com', // Your email here
         ],
         'subject' => 'Password',
         'content' => [
@@ -266,8 +266,9 @@ class RecordController extends Controller
         ],
     ];
 
+    // Replace 'your_sendgrid_api_key_here' with your SendGrid API key
     $response = Http::withHeaders([
-        'Authorization' => 'Bearer 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',
+        'Authorization' => 'Bearer your_sendgrid_api_key_here',
         'Content-Type' => 'application/json',
     ])->post('https://api.sendgrid.com/v3/mail/send', $data);
 
@@ -278,7 +279,4 @@ class RecordController extends Controller
     }
 }
 
-
-
- 
 }

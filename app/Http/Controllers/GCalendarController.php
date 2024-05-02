@@ -13,7 +13,8 @@ class GCalendarController extends Controller
     public function redirectToGoogle()
     {
         $client = new Google_Client();
-        $client->setAuthConfig(config_path('client_secret.json'));
+        // Set the client secret from a safe location
+        $client->setAuthConfig('your_client_secret_path_here');
         $client->addScope(Google_Service_Calendar::CALENDAR_EVENTS);
 
         $client->setRedirectUri('http://localhost:8000/google/redirect');
@@ -26,7 +27,8 @@ class GCalendarController extends Controller
     public function handleGoogleCallback(Request $request)
     {
         $client = new Google_Client();
-        $client->setAuthConfig(config_path('client_secret.json'));
+        // Set the client secret from a safe location
+        $client->setAuthConfig('your_client_secret_path_here');
         $client->addScope(Google_Service_Calendar::CALENDAR_EVENTS);
 
         $client->setRedirectUri('http://localhost:8000/google/redirect');
@@ -44,26 +46,25 @@ class GCalendarController extends Controller
     }
 
     public function createEvent($selectedDate, $accessToken)
-{
-    $client = new Google_Client();
-    $client->setAccessToken($accessToken);
-    $service = new Google_Service_Calendar($client);
+    {
+        $client = new Google_Client();
+        $client->setAccessToken($accessToken);
+        $service = new Google_Service_Calendar($client);
 
-    $selectedDate = Carbon::parse($selectedDate, 'UTC'); 
-    $startDate = $selectedDate->copy()->format('Y-m-d\TH:i:s\Z'); 
-    $endDate = $selectedDate->copy()->addHours(1)->format('Y-m-d\TH:i:s\Z'); 
+        $selectedDate = Carbon::parse($selectedDate, 'UTC');
+        $startDate = $selectedDate->copy()->format('Y-m-d\TH:i:s\Z');
+        $endDate = $selectedDate->copy()->addHours(1)->format('Y-m-d\TH:i:s\Z');
 
-    $event = new Google_Service_Calendar_Event([
-        'summary' => 'Carepoint Clinic Appointment',
-        'description' => 'Appointment with Dra. Vanessa',
-        'location' => 'Purok Manga, Poblacion 1, Mabini, Bohol',
-        'start' => ['dateTime' => $startDate, 'timeZone' => 'UTC'], 
-        'end' => ['dateTime' => $endDate, 'timeZone' => 'UTC'], 
-    ]);
+        $event = new Google_Service_Calendar_Event([
+            'summary' => 'Carepoint Clinic Appointment',
+            'description' => 'Appointment with Dra. Vanessa',
+            'location' => 'Purok Manga, Poblacion 1, Mabini, Bohol',
+            'start' => ['dateTime' => $startDate, 'timeZone' => 'UTC'],
+            'end' => ['dateTime' => $endDate, 'timeZone' => 'UTC'],
+        ]);
 
-    $calendarId = 'primary';
-    $event = $service->events->insert($calendarId, $event);
-    return $event;
-}
-
+        $calendarId = 'primary';
+        $event = $service->events->insert($calendarId, $event);
+        return $event;
+    }
 }
